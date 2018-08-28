@@ -159,10 +159,10 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2 = (Graphics2D)g;
-//        RenderingHints rh = new RenderingHints(
-//                RenderingHints.KEY_ANTIALIASING,
-//                RenderingHints.VALUE_ANTIALIAS_ON);
-//        g2.setRenderingHints(rh);
+        RenderingHints rh = new RenderingHints(
+                RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setRenderingHints(rh);
 
         m_axis.Draw(g2);
         for(DataDrawable data : Register.Read())

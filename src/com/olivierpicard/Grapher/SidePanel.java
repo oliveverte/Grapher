@@ -1,7 +1,9 @@
 package com.olivierpicard.Grapher;
 
 import com.olivierpicard.Grapher.DataManager.DataDrawable;
+import com.olivierpicard.Grapher.DataManager.History;
 import com.olivierpicard.Grapher.DataManager.Register;
+import com.olivierpicard.Grapher.DataManager.RegisterActions.RegisterRemoveAction;
 import com.olivierpicard.Grapher.Tools.VisualTools.CellDataRenderer;
 import com.olivierpicard.Grapher.Tools.VisualTools.HintTextField;
 import com.olivierpicard.Grapher.Tools.VisualTools.ThemeRefreshable;
@@ -9,6 +11,8 @@ import com.olivierpicard.Grapher.Tools.VisualTools.ThemeRefreshable;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class SidePanel extends JPanel implements ThemeRefreshable
 {
@@ -30,6 +34,13 @@ public class SidePanel extends JPanel implements ThemeRefreshable
         m_listOfDrawableDatas.setCellRenderer(new CellDataRenderer());
         m_listOfDrawableDatas.setSelectionBackground(Color.PINK);
         m_listOfDrawableDatas.setFixedCellHeight(CELL_HEIGHT);
+        m_listOfDrawableDatas.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                SidePanel.this.OnListClick(e);
+            }
+        });
 
         m_scrollablePanel = new JScrollPane();
         m_scrollablePanel.add(m_listOfDrawableDatas);
@@ -42,8 +53,6 @@ public class SidePanel extends JPanel implements ThemeRefreshable
 
         add(m_interpreter_textField, BorderLayout.NORTH);
         add(new JScrollPane(m_listOfDrawableDatas), BorderLayout.CENTER);
-
-        m_scrollablePanel.requestFocus();
     }
 
 
@@ -73,5 +82,20 @@ public class SidePanel extends JPanel implements ThemeRefreshable
         m_listOfDrawableDatas.setSelectionBackground(ViewController.theme.get_hightlightBackgroundColor());
         m_listOfDrawableDatas.setForeground(ViewController.theme.get_foregroundColor());
         m_listOfDrawableDatas.setSelectionForeground(ViewController.theme.get_inversedForgroundColor());
+    }
+
+
+    public void OnListClick(MouseEvent e)
+    {
+        Point p = e.getPoint();
+        final int minX = getSize().width - CellDataRenderer.BUTTON_SIZE;
+        final int maxX = getSize().width;
+
+        final int index = m_listOfDrawableDatas.locationToIndex(e.getPoint());
+        if(index == -1) return;
+
+        if(p.x > minX && p.x < maxX)
+            History.Write(new RegisterRemoveAction(m_listOfDrawableDatas.getSelectedValue()));
+        m_viewController.Refresh();
     }
 }

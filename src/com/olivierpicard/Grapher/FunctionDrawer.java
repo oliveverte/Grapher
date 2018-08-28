@@ -28,5 +28,4 @@ public class FunctionDrawer extends SceneDrawer
 
         m_lastPoint = point;
     }
-
 }
