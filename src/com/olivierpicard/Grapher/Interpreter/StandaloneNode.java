@@ -30,6 +30,11 @@ public class StandaloneNode extends ANode
                 _parent = operator;
             }
         }
+        else if(node instanceof StandaloneNode)
+        {
+            this.InsertNode(new OperatorNode("*"));
+            _parent.InsertNode(node);
+        }
         else throw new IllegalArgumentException();
 
         return node;
