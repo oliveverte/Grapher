@@ -43,10 +43,10 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener
         Refresh();
 
         m_buttons = new Button[4];
-        m_buttons[0] = new Button(this::OnZoomOutButton, "minus.png");
-        m_buttons[1] = new Button(this::OnZoomInButton, "plus.png");
-        m_buttons[2] = new Button(this::OnCenterButton, "target.png");
-        m_buttons[3] = new Button(this::OnThemeButton, "theme.png");
+        m_buttons[0] = new Button(this::OnZoomOutButton, "img/minus.png");
+        m_buttons[1] = new Button(this::OnZoomInButton, "img/plus.png");
+        m_buttons[2] = new Button(this::OnCenterButton, "img/target.png");
+        m_buttons[3] = new Button(this::OnThemeButton, "img/theme.png");
 
         addComponentListener(new ComponentAdapter() {
             @Override

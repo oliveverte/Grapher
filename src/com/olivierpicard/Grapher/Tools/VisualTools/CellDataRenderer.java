@@ -37,8 +37,8 @@ public class CellDataRenderer extends JPanel implements ListCellRenderer<DataDra
 
         String pathToDeleteImage;
         if(ViewController.theme == Theme.LIGHT)
-            pathToDeleteImage = "delete_light.png";
-        else pathToDeleteImage = "delete_dark.png";
+            pathToDeleteImage = "img/delete_light.png";
+        else pathToDeleteImage = "img/delete_dark.png";
 
         Image img = new ImageIcon(pathToDeleteImage).getImage().getScaledInstance(BUTTON_SIZE, BUTTON_SIZE,  Image.SCALE_SMOOTH);
         m_delete.setIcon(new ImageIcon(img));
