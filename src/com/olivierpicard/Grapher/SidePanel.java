@@ -16,8 +16,9 @@ import java.awt.event.MouseEvent;
 
 public class SidePanel extends JPanel implements ThemeRefreshable
 {
-    private final int CELL_HEIGHT = 50;
+    private static final int CELL_HEIGHT = 50;
 
+    private DefaultListModel<DataDrawable> m_model;
     private JList<DataDrawable> m_listOfDrawableDatas;
     private JScrollPane m_scrollablePanel;
     private HintTextField m_interpreter_textField;
@@ -30,7 +31,8 @@ public class SidePanel extends JPanel implements ThemeRefreshable
 
         m_viewController = viewController;
 
-        m_listOfDrawableDatas = new JList<>();
+        m_model = new DefaultListModel<>();
+        m_listOfDrawableDatas = new JList<>(m_model);
         m_listOfDrawableDatas.setCellRenderer(new CellDataRenderer());
         m_listOfDrawableDatas.setSelectionBackground(Color.PINK);
         m_listOfDrawableDatas.setFixedCellHeight(CELL_HEIGHT);
@@ -49,7 +51,7 @@ public class SidePanel extends JPanel implements ThemeRefreshable
         m_interpreter_textField.setPreferredSize(new Dimension(50, 50));
         m_interpreter_textField.setMinimumSize(new Dimension(50, 50));
         m_interpreter_textField.setFont(new Font("SansSerif", Font.PLAIN, 16));
-        m_interpreter_textField.addActionListener(e -> OnTextField_Enter(e));
+        m_interpreter_textField.addActionListener(this::OnTextField_Enter);
 
         add(m_interpreter_textField, BorderLayout.NORTH);
         add(new JScrollPane(m_listOfDrawableDatas), BorderLayout.CENTER);
@@ -58,11 +60,11 @@ public class SidePanel extends JPanel implements ThemeRefreshable
 
     public void Refresh()
     {
-        final DefaultListModel<DataDrawable> model = new DefaultListModel<>();
+        m_model.clear();
         final DataDrawable[] data = Register.Read();
         for(int i = 0; i < data.length; i++)
-            model.add(i, data[i]);
-        m_listOfDrawableDatas.setModel(model);
+            m_model.add(i, data[i]);
+
     }
 
 
@@ -82,6 +84,7 @@ public class SidePanel extends JPanel implements ThemeRefreshable
         m_listOfDrawableDatas.setSelectionBackground(ViewController.theme.get_hightlightBackgroundColor());
         m_listOfDrawableDatas.setForeground(ViewController.theme.get_foregroundColor());
         m_listOfDrawableDatas.setSelectionForeground(ViewController.theme.get_inversedForgroundColor());
+        Refresh();
     }
 
 

@@ -43,10 +43,10 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener
         Refresh();
 
         m_buttons = new Button[4];
-        m_buttons[0] = new Button(this::OnZoomOutButton);
-        m_buttons[1] = new Button(this::OnZoomInButton);
-        m_buttons[2] = new Button(this::OnCenterButton);
-        m_buttons[3] = new Button(this::OnThemeButton);
+        m_buttons[0] = new Button(this::OnZoomOutButton, "minus.png");
+        m_buttons[1] = new Button(this::OnZoomInButton, "plus.png");
+        m_buttons[2] = new Button(this::OnCenterButton, "target.png");
+        m_buttons[3] = new Button(this::OnThemeButton, "theme.png");
 
         addComponentListener(new ComponentAdapter() {
             @Override
@@ -67,12 +67,15 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener
 
     public void mouseEntered (MouseEvent mouseEvent) {}
     public void mouseExited (MouseEvent mouseEvent) {}
-//    public void mouseClicked (MouseEvent mouseEvent) {}
+    public void mouseReleased (MouseEvent mouseEvent) {}
+    public void mouseClicked (MouseEvent mouseEvent) {}
 
 
     public void RefreshTheme()
     {
         setBackground(ViewController.theme.get_backgroundColor());
+        for(Button button : m_buttons) button.RefreshTheme();
+        Refresh();
     }
 
 
@@ -111,20 +114,6 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener
         m_deltaOriginePosition.Add(new ScenePoint(dx, dy));
         m_lastMousePosition = e.getPoint();
         Refresh();
-    }
-
-
-    public void mouseReleased (MouseEvent mouseEvent)
-    {
-//        for (Button button : m_buttons)
-//            button.mouseClicked(mouseEvent);
-    }
-
-
-    public void mouseClicked (MouseEvent mouseEvent)
-    {
-//        for (Button button : m_buttons)
-//            button.mouseClicked(mouseEvent);
     }
 
 
