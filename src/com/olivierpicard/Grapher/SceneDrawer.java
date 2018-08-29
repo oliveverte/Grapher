@@ -27,4 +27,7 @@ public abstract class SceneDrawer
 
     public void SetThickness(float thickness) {m_graphics.setStroke(new BasicStroke(thickness));}
 
+
+    public void Clear() {m_lastPoint = null;}
+
 }

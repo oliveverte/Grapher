@@ -6,6 +6,7 @@ public class OperatorNode extends ANode
     private Operators _operator;
     protected String _operatorSign;
     protected ANode _leftNode, _rightNode;
+    protected float m_lastResult;
 
     public Operators get_operator() { return _operator; }
 
@@ -110,7 +111,9 @@ public class OperatorNode extends ANode
                 result = _leftNode.Compute(argument) * _rightNode.Compute(argument);
                 break;
             case DIVISION:
-                result = _leftNode.Compute(argument) / _rightNode.Compute(argument);
+                final float rightNodeValue = _rightNode.Compute(argument);
+                if(rightNodeValue > -0.005f && rightNodeValue < 0.005f) throw new ArithmeticException();
+                result = _leftNode.Compute(argument) / rightNodeValue;
                 break;
             case SQUARE:
                 result = (float)Math.pow(_leftNode.Compute(argument), _rightNode.Compute(argument));

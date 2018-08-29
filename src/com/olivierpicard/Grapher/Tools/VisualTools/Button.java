@@ -6,10 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public class Button extends JComponent implements ThemeRefreshable
+public class Button implements ThemeRefreshable
 {
     public int size = 40;
-    public boolean m_isVisible = false;
+    public boolean isVisible = false;
 
     protected int m_x, m_y;
     private IButtonCallback m_callback;
@@ -45,6 +45,7 @@ public class Button extends JComponent implements ThemeRefreshable
 
     public void Draw(Graphics2D g, int x, int y)
     {
+        isVisible = true;
         m_x = x;
         m_y = y;
         g.setColor(ViewController.theme.get_ButtonBackgroundColor());
@@ -56,13 +57,13 @@ public class Button extends JComponent implements ThemeRefreshable
         if(m_icon == null) return;
 
         g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        g.drawImage(m_icon, x - size /4, y - size /4, size /2, size /2, this);
+        while(!g.drawImage(m_icon, x - size /4, y - size /4, size /2, size /2, null)){}
     }
 
 
     public void mouseClicked(MouseEvent e)
     {
-        if(!m_isVisible) return;
+        if(!isVisible) return;
         if(e.getX() >= m_x - size /2 && e.getX() <= m_x + size /2
                 && e.getY() >= m_y - size /2 && e.getY() <= m_y + size /2)
             m_callback.ExecuteFunction();

@@ -20,7 +20,7 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener
     {
         public static int gridUnitPixelSize = 64;
         public static float gridUnitValue = 1f;
-        public final static float gridUnitResolution = 0.2f; // Alias step
+        public final static float gridUnitResolution = 0.002f; // Alias step
         public static Dimension screenSize;
         public static Interval2D sceneInterval;
         public static ScenePoint originPixelPosition;
@@ -167,8 +167,8 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener
 
 
     @Override
-    public void paint(Graphics g) {
-        super.paint(g);
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
         RenderingHints rh = new RenderingHints(
                 RenderingHints.KEY_ANTIALIASING,
@@ -184,11 +184,16 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener
                     getWidth() - m_buttons[i].size - BUTTON_MARGIN,
                     getHeight() - (m_buttons[i].size - BUTTON_MARGIN)*2*(i+1));
 
-        if(History.isUndoAvailable())
-            m_undoButton.Draw(g2, getWidth() - (m_undoButton.size - BUTTON_MARGIN)*2, m_undoButton.size /2);
-        else m_undoButton.m_isVisible = false;
-        if(History.isRedoAvailable())
-            m_redoButton.Draw(g2, getWidth() - (m_redoButton.size - BUTTON_MARGIN), m_redoButton.size /2);
-        else m_redoButton.m_isVisible = false;
+        if(History.isUndoAvailable()) {
+            m_undoButton.Draw(g2, getWidth() - (m_undoButton.size - BUTTON_MARGIN) * 2, m_undoButton.size / 2);
+        }
+        else m_undoButton.isVisible = false;
+
+        if(History.isRedoAvailable()) {
+            m_redoButton.Draw(g2, getWidth() - (m_redoButton.size - BUTTON_MARGIN), m_redoButton.size / 2);
+        }
+        else m_redoButton.isVisible = false;
+
+//        System.out.println("undo : " + History.isUndoAvailable() + " -- redo : " + History.isRedoAvailable());
     }
 }

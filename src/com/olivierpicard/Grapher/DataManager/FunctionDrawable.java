@@ -27,9 +27,13 @@ public class FunctionDrawable extends DataDrawable
         final float step = Math.min(Scene.Constraint.gridUnitResolution * Scene.Constraint.gridUnitValue, 0.2f);
         drawer.SetColor(m_color);
         float i;
-        for(i = lowerBound; i <= upperBound+1; i += step)
-            drawer.Add(new ScenePoint(i, m_tree.Compute(i)));
-//        System.out.println(lowerBound + "   ----   " + upperBound + "  ----   " + i);
+        for(i = lowerBound; i <= upperBound+1; i += step) {
+            try {
+                drawer.Add(new ScenePoint(i, m_tree.Compute(i)));
+            } catch (ArithmeticException e) {
+                drawer.Clear();
+            }
+        }
     }
 
 
