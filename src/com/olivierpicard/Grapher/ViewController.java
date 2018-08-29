@@ -42,6 +42,7 @@ public class ViewController extends JFrame implements ThemeRefreshable
         setLocationRelativeTo(null);
         pack();
         setVisible(true);
+        requestFocusInWindow();
 
         ExecFunctionInterpreter("f(x)=sin(x)");
         ExecFunctionInterpreter("g(x)=x^2");
