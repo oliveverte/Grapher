@@ -20,10 +20,13 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener
     {
         public static int gridUnitPixelSize = 64;
         public static float gridUnitValue = 1f;
-        public final static float gridUnitResolution = 0.002f; // Alias step
+        public final static float gridUnitResolution = .002f; // Alias step
         public static Dimension screenSize;
         public static Interval2D sceneInterval;
         public static ScenePoint originPixelPosition;
+        public static final float MAX_ZOOM_FACTOR = 6;
+        public static float zoomFactor;
+        public static final float ZOOM_UNIT_INCREASE_FACTOR = .5f;
     }
 
 
@@ -85,7 +88,6 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener
     }
 
 
-
     public void Refresh()
     {
         Constraint.screenSize = getSize();
@@ -116,7 +118,8 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener
     }
 
 
-    private void mouseDragged(MouseEvent e) {
+    private void mouseDragged(MouseEvent e)
+    {
         int dx = e.getX() - m_lastMousePosition.x;
         int dy = e.getY() - m_lastMousePosition.y;
         m_deltaOriginePosition.Add(new ScenePoint(dx, dy));
@@ -127,14 +130,22 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener
 
     public void OnZoomOutButton()
     {
-        Constraint.gridUnitValue /= 0.5f;
+        if(Constraint.zoomFactor <= -Constraint.MAX_ZOOM_FACTOR) return;
+
+        Constraint.zoomFactor--;
+//        Constraint.gridUnitPixelSize -= 4;
+        Constraint.gridUnitValue /= Constraint.ZOOM_UNIT_INCREASE_FACTOR;
         Refresh();
     }
 
 
     public void OnZoomInButton()
     {
-        Constraint.gridUnitValue *= 0.5f;
+        if(Constraint.zoomFactor >= Constraint.MAX_ZOOM_FACTOR)return;
+
+        Constraint.zoomFactor++;
+//        Constraint.gridUnitPixelSize += 4;
+        Constraint.gridUnitValue *= Constraint.ZOOM_UNIT_INCREASE_FACTOR;
         Refresh();
     }
 
@@ -184,16 +195,11 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener
                     getWidth() - m_buttons[i].size - BUTTON_MARGIN,
                     getHeight() - (m_buttons[i].size - BUTTON_MARGIN)*2*(i+1));
 
-        if(History.isUndoAvailable()) {
+        if(m_undoButton.isVisible = History.isUndoAvailable())
             m_undoButton.Draw(g2, getWidth() - (m_undoButton.size - BUTTON_MARGIN) * 2, m_undoButton.size / 2);
-        }
-        else m_undoButton.isVisible = false;
 
-        if(History.isRedoAvailable()) {
+        if(m_redoButton.isVisible = History.isRedoAvailable())
             m_redoButton.Draw(g2, getWidth() - (m_redoButton.size - BUTTON_MARGIN), m_redoButton.size / 2);
-        }
-        else m_redoButton.isVisible = false;
 
-//        System.out.println("undo : " + History.isUndoAvailable() + " -- redo : " + History.isRedoAvailable());
     }
 }

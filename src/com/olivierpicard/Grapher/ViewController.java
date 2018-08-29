@@ -80,8 +80,12 @@ public class ViewController extends JFrame implements ThemeRefreshable
     public void ExecFunctionInterpreter(String function)
     {
         // TODO : Faire la capture des erreur et empêcher d'afficher
-        final DataDrawable data = new Parser(function).Interpret();
-        History.Write(new RegisterAddAction(data));
-        Refresh();
+        try {
+            final DataDrawable data = new Parser(function).Interpret();
+            History.Write(new RegisterAddAction(data));
+            Refresh();
+        }catch (IllegalArgumentException e) {
+            System.out.println("Erreur de syntaxe");
+        }
     }
 }

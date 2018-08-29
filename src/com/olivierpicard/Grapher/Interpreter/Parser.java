@@ -23,17 +23,23 @@ public class Parser
     {
         m_tree = new WrapNode();
         m_functionName = m_variableName = "";
-        int startingExpression;
+        int startingExpression = 0;
 
-        PreCompute();
-        startingExpression = m_readingHead;
+        if(m_expression.contains("=")) {
+            PreCompute();
+            startingExpression = m_readingHead;
+        }
+        else{
+            m_functionName = "f";
+            m_variableName = "x";
+        }
+
         ComputeAutomatLogic();
 
         return new FunctionDrawable(
                 m_functionName,
                 m_variableName,
-                m_expression.substring(
-                        startingExpression, m_expression.length()),
+                m_expression.substring(startingExpression),
                 m_tree.getRoot()
         );
     }
