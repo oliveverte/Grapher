@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 public class Button extends JComponent implements ThemeRefreshable
 {
     public int size = 40;
+    public boolean m_isVisible = false;
 
     protected int m_x, m_y;
     private IButtonCallback m_callback;
@@ -61,6 +62,7 @@ public class Button extends JComponent implements ThemeRefreshable
 
     public void mouseClicked(MouseEvent e)
     {
+        if(!m_isVisible) return;
         if(e.getX() >= m_x - size /2 && e.getX() <= m_x + size /2
                 && e.getY() >= m_y - size /2 && e.getY() <= m_y + size /2)
             m_callback.ExecuteFunction();

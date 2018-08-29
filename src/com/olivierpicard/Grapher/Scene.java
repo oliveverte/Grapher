@@ -186,7 +186,9 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener
 
         if(History.isUndoAvailable())
             m_undoButton.Draw(g2, getWidth() - (m_undoButton.size - BUTTON_MARGIN)*2, m_undoButton.size /2);
+        else m_undoButton.m_isVisible = false;
         if(History.isRedoAvailable())
             m_redoButton.Draw(g2, getWidth() - (m_redoButton.size - BUTTON_MARGIN), m_redoButton.size /2);
+        else m_redoButton.m_isVisible = false;
     }
 }

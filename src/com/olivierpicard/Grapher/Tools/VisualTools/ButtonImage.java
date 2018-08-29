@@ -4,7 +4,6 @@ import java.awt.*;
 
 public class ButtonImage extends Button
 {
-
     public ButtonImage(IButtonCallback callback, String iconPath)
     {
         super(callback, iconPath);
