@@ -21,7 +21,8 @@ public class StandaloneNode extends ANode
     @Override
     public ANode InsertNode(ANode node)
     {
-        if(node instanceof OperatorNode) {
+        if(node instanceof OperatorNode)
+        {
             if(_parent instanceof OperatorNode) return _parent.InsertNode(node);
             else {
                 OperatorNode operator = (OperatorNode) node;
@@ -30,7 +31,7 @@ public class StandaloneNode extends ANode
                 _parent = operator;
             }
         }
-        else if(node instanceof StandaloneNode)
+        else if(node instanceof StandaloneNode || node instanceof WrapNode)
         {
             this.InsertNode(new OperatorNode("*"));
             _parent.InsertNode(node);

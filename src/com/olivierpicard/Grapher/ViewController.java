@@ -2,6 +2,7 @@ package com.olivierpicard.Grapher;
 
 import com.olivierpicard.Grapher.DataManager.DataDrawable;
 import com.olivierpicard.Grapher.DataManager.History;
+import com.olivierpicard.Grapher.DataManager.Register;
 import com.olivierpicard.Grapher.DataManager.RegisterActions.RegisterAddAction;
 import com.olivierpicard.Grapher.Interpreter.Parser;
 import com.olivierpicard.Grapher.Tools.VisualTools.Theme;
@@ -35,7 +36,6 @@ public class ViewController extends JFrame implements ThemeRefreshable
         m_splitPane.setResizeWeight(0.15);
         add(m_splitPane, BorderLayout.CENTER);
 
-//        add(m_scene, BorderLayout.CENTER);
         setSize(800, 700);
         setExtendedState(MAXIMIZED_BOTH);
         setDefaultCloseOperation(EXIT_ON_CLOSE);

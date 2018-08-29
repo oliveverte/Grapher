@@ -1,15 +1,16 @@
 package com.olivierpicard.Grapher;
 import com.olivierpicard.Grapher.DataManager.DataDrawable;
+import com.olivierpicard.Grapher.DataManager.History;
 import com.olivierpicard.Grapher.DataManager.Register;
 import com.olivierpicard.Grapher.Tools.Interval2D;
 import com.olivierpicard.Grapher.Tools.ScenePoint;
 import com.olivierpicard.Grapher.Tools.VisualTools.Button;
+import com.olivierpicard.Grapher.Tools.VisualTools.ButtonImage;
 import com.olivierpicard.Grapher.Tools.VisualTools.ThemeRefreshable;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.function.Function;
 
 public class Scene extends JPanel implements ThemeRefreshable, MouseListener
 {
@@ -26,13 +27,13 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener
     }
 
 
-
     private final int BUTTON_MARGIN = 15;
     private ViewController m_viewController;
     private Axis m_axis;
     private ScenePoint m_deltaOriginePosition;
     private Point m_lastMousePosition;
     private Button[] m_buttons;
+    private ButtonImage m_undoButton, m_redoButton;
 
 
     public Scene(ViewController viewController)
@@ -47,6 +48,9 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener
         m_buttons[1] = new Button(this::OnZoomInButton, "img/plus.png");
         m_buttons[2] = new Button(this::OnCenterButton, "img/target.png");
         m_buttons[3] = new Button(this::OnThemeButton, "img/theme.png");
+
+        m_undoButton = new ButtonImage(this::OnUndoButton, "img/undo.png");
+        m_redoButton = new ButtonImage(this::OnRedoButton, "img/redo.png");
 
         addComponentListener(new ComponentAdapter() {
             @Override
@@ -75,6 +79,8 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener
     {
         setBackground(ViewController.theme.get_backgroundColor());
         for(Button button : m_buttons) button.RefreshTheme();
+        m_undoButton.RefreshTheme();
+        m_redoButton.RefreshTheme();
         Refresh();
     }
 
@@ -105,6 +111,8 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener
         for (Button button : m_buttons)
             button.mouseClicked(mouseEvent);
         m_lastMousePosition = mouseEvent.getPoint();
+        m_redoButton.mouseClicked(mouseEvent);
+        m_undoButton.mouseClicked(mouseEvent);
     }
 
 
@@ -138,6 +146,20 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener
     }
 
 
+    public void OnUndoButton()
+    {
+        History.Undo();
+        m_viewController.Refresh();
+    }
+
+
+    public void OnRedoButton()
+    {
+        History.Redo();
+        m_viewController.Refresh();
+    }
+
+
     public void OnThemeButton()
     {
         m_viewController.OnSwitchTheme();
@@ -159,7 +181,12 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener
 
         for(int i = 0; i < m_buttons.length; i++)
             m_buttons[i].Draw(g2,
-                    getWidth() - Button.DIAMETER - BUTTON_MARGIN,
-                    getHeight() - (Button.DIAMETER - BUTTON_MARGIN)*2*(i+1));
+                    getWidth() - m_buttons[i].size - BUTTON_MARGIN,
+                    getHeight() - (m_buttons[i].size - BUTTON_MARGIN)*2*(i+1));
+
+        if(History.isUndoAvailable())
+            m_undoButton.Draw(g2, getWidth() - (m_undoButton.size - BUTTON_MARGIN)*2, m_undoButton.size /2);
+        if(History.isRedoAvailable())
+            m_redoButton.Draw(g2, getWidth() - (m_redoButton.size - BUTTON_MARGIN), m_redoButton.size /2);
     }
 }

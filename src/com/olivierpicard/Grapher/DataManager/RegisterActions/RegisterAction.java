@@ -7,6 +7,7 @@ public abstract class RegisterAction
 {
     protected DataDrawable m_data;
 
+
     public abstract void DoAction();
 
 

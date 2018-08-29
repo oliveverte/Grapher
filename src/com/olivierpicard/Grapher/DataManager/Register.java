@@ -29,11 +29,9 @@ public class Register {
         }
     }
 
-
-    public static void Refresh() {
+    public static void Clear()
+    {
         m_datas.clear();
-        for(RegisterAction action : History.Read())
-            action.DoAction();
     }
 
 

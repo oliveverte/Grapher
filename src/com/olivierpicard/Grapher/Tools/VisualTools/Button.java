@@ -5,15 +5,14 @@ import com.olivierpicard.Grapher.ViewController;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.awt.image.ImageObserver;
 
 public class Button extends JComponent implements ThemeRefreshable
 {
-    public static final int DIAMETER = 40;
+    public int size = 40;
 
-    private int m_x, m_y;
+    protected int m_x, m_y;
     private IButtonCallback m_callback;
-    private Image m_icon;
+    protected Image m_icon;
     private String m_iconPath;
 
 
@@ -40,7 +39,6 @@ public class Button extends JComponent implements ThemeRefreshable
             m_icon = Toolkit.getDefaultToolkit().getImage(path[0] + "_light." + path[1]);
         else
             m_icon = Toolkit.getDefaultToolkit().getImage(path[0] + "_dark." + path[1]);
-
     }
 
 
@@ -49,22 +47,22 @@ public class Button extends JComponent implements ThemeRefreshable
         m_x = x;
         m_y = y;
         g.setColor(ViewController.theme.get_ButtonBackgroundColor());
-        g.fillOval(x - DIAMETER/2, y - DIAMETER/2, DIAMETER, DIAMETER);
+        g.fillOval(x - size /2, y - size /2, size, size);
 
         g.setColor(ViewController.theme.get_ButtonBorderColor());
-        g.drawOval(x - DIAMETER/2, y - DIAMETER/2, DIAMETER, DIAMETER);
+        g.drawOval(x - size /2, y - size /2, size, size);
 
         if(m_icon == null) return;
 
         g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        g.drawImage(m_icon, x - DIAMETER/4, y - DIAMETER/4, DIAMETER/2, DIAMETER/2, this);
+        g.drawImage(m_icon, x - size /4, y - size /4, size /2, size /2, this);
     }
 
 
     public void mouseClicked(MouseEvent e)
     {
-        if(e.getX() >= m_x - DIAMETER/2 && e.getX() <= m_x + DIAMETER/2
-                && e.getY() >= m_y - DIAMETER/2 && e.getY() <= m_y + DIAMETER/2)
+        if(e.getX() >= m_x - size /2 && e.getX() <= m_x + size /2
+                && e.getY() >= m_y - size /2 && e.getY() <= m_y + size /2)
             m_callback.ExecuteFunction();
     }
 
