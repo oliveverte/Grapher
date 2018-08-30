@@ -23,7 +23,7 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener, Mo
     {
         public static int gridUnitPixelSize = 64;
         public static float gridUnitValue = 1f;
-        public final static float gridUnitResolution = .02f; // Alias step
+        public final static float gridUnitResolution = .007f; // Alias step
         public static Dimension screenSize;
         public static Interval2D sceneInterval;
         public static ScenePoint originPixelPosition;
@@ -168,6 +168,7 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener, Mo
     {
         m_deltaOriginePosition = new ScenePoint(0f, 0f);
         Constraint.gridUnitValue = 1f;
+        Constraint.zoomFactor = 0;
     }
 
 
@@ -225,6 +226,7 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener, Mo
         if(Register.GetSelection() != null) data = Register.GetSelection();
         else if(Register.GetLast() != null) data = Register.GetLast();
         else return;
+
 
         final float xCoord = new ScenePoint(m_mousePointer.x, m_mousePointer.y).ChangeSpace(Space.SCENE).get_x();
         final float yCoord = data.Compute(xCoord);

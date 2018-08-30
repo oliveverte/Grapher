@@ -29,7 +29,7 @@ public class FunctionDrawable extends DataDrawable
     {
         final float lowerBound = Scene.Constraint.sceneInterval.get_minX();
         final float upperBound = Scene.Constraint.sceneInterval.get_maxX();
-        final float step = Math.min(Scene.Constraint.gridUnitResolution * Scene.Constraint.gridUnitValue, 0.2f);
+        final float step = Math.min(Scene.Constraint.gridUnitResolution * Scene.Constraint.gridUnitValue, Scene.Constraint.gridUnitResolution);
 
         if(m_isSelected) {
             drawer.SetThickness(FunctionDrawer.FUNCTION_THICKNESS + 2f);

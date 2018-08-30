@@ -18,8 +18,11 @@ public class FunctionDrawer extends SceneDrawer
     public void Add(ScenePoint point)
     {
         ScenePoint _point = point.ChangeSpace(Scene.Space.SCREEN);
+
         if(m_lastPoint == null) { m_lastPoint = point; return; }
-        if(Math.abs(point.get_y() - m_lastPoint.get_y()) * Scene.Constraint.gridUnitValue > 20) {Clear(); return;}
+        if(Math.abs(point.get_y() - m_lastPoint.get_y()) * Scene.Constraint.gridUnitValue > 3
+                && Math.min(point.get_y(), m_lastPoint.get_y()) < 0
+                && Math.max(point.get_y(), m_lastPoint.get_y()) > 0) {Clear(); return;}
 
         final ScenePoint lastPoint = m_lastPoint.ChangeSpace(Scene.Space.SCREEN);
 
