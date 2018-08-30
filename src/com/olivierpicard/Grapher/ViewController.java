@@ -48,6 +48,7 @@ public class ViewController extends JFrame implements ThemeRefreshable
 //        ExecFunctionInterpreter("g(x)=x^2");
 //        ExecFunctionInterpreter("h(x)=2*x");
 //        ExecFunctionInterpreter("f(x)=1/x");
+        ExecFunctionInterpreter("f(x)=tan(x)");
 
         RefreshTheme();
     }

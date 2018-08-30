@@ -35,7 +35,7 @@ public class FunctionDrawable extends DataDrawable
             drawer.SetThickness(FunctionDrawer.FUNCTION_THICKNESS + 2f);
             drawer.SetColor((ViewController.theme == Theme.LIGHT ? m_color.darker() : m_color.brighter()));
             for(float i = lowerBound; i <= upperBound+1; i += step)
-                try { drawer.Add(new ScenePoint(i, m_tree.Compute(i))); } catch (ArithmeticException e) { drawer.Clear(); }
+                drawer.Add(new ScenePoint(i, m_tree.Compute(i)));
         }
 
         drawer.Clear();
@@ -43,7 +43,7 @@ public class FunctionDrawable extends DataDrawable
         drawer.SetColor(m_color);
 
         for(float i = lowerBound; i <= upperBound+1; i += step)
-            try { drawer.Add(new ScenePoint(i, m_tree.Compute(i))); } catch (ArithmeticException e) { drawer.Clear(); }
+            drawer.Add(new ScenePoint(i, m_tree.Compute(i)));
     }
 
     @Override

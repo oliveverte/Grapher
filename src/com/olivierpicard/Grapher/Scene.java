@@ -23,7 +23,7 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener, Mo
     {
         public static int gridUnitPixelSize = 64;
         public static float gridUnitValue = 1f;
-        public final static float gridUnitResolution = .002f; // Alias step
+        public final static float gridUnitResolution = .02f; // Alias step
         public static Dimension screenSize;
         public static Interval2D sceneInterval;
         public static ScenePoint originPixelPosition;
@@ -119,6 +119,7 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener, Mo
     {
         for (Button button : m_buttons)
             button.mouseClicked(mouseEvent);
+
         m_lastMousePosition = mouseEvent.getPoint();
         m_redoButton.mouseClicked(mouseEvent);
         m_undoButton.mouseClicked(mouseEvent);

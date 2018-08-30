@@ -17,15 +17,17 @@ public class FunctionDrawer extends SceneDrawer
 
     public void Add(ScenePoint point)
     {
-        point = point.ChangeSpace(Scene.Space.SCREEN);
-
+        ScenePoint _point = point.ChangeSpace(Scene.Space.SCREEN);
         if(m_lastPoint == null) { m_lastPoint = point; return; }
+        if(Math.abs(point.get_y() - m_lastPoint.get_y()) * Scene.Constraint.gridUnitValue > 20) {Clear(); return;}
+
+        final ScenePoint lastPoint = m_lastPoint.ChangeSpace(Scene.Space.SCREEN);
 
         m_graphics.drawLine(
-                (int)m_lastPoint.get_x(),
-                (int)m_lastPoint.get_y(),
-                (int)point.get_x(),
-                (int)point.get_y()
+                (int)lastPoint.get_x(),
+                (int)lastPoint.get_y(),
+                (int)_point.get_x(),
+                (int)_point.get_y()
         );
 
         m_lastPoint = point;

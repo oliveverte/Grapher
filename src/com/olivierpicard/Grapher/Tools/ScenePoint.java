@@ -67,6 +67,14 @@ public class ScenePoint
     }
 
 
+    public ScenePoint Substract(ScenePoint point)
+    {
+        _x -= point._x;
+        _y -= point._y;
+        return this;
+    }
+
+
     public float get_x() {
         return _x;
     }
