@@ -15,6 +15,7 @@ public abstract class DataDrawable {
 
     public abstract String toString();
     public abstract void Draw(FunctionDrawer drawer);
+    public abstract float Compute(float arg);
 
 
     public DataDrawable(Color color, String name, String expression)

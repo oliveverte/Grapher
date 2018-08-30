@@ -38,11 +38,18 @@ public class FunctionDrawable extends DataDrawable
                 try { drawer.Add(new ScenePoint(i, m_tree.Compute(i))); } catch (ArithmeticException e) { drawer.Clear(); }
         }
 
+        drawer.Clear();
         drawer.SetThickness(FunctionDrawer.FUNCTION_THICKNESS);
         drawer.SetColor(m_color);
 
         for(float i = lowerBound; i <= upperBound+1; i += step)
             try { drawer.Add(new ScenePoint(i, m_tree.Compute(i))); } catch (ArithmeticException e) { drawer.Clear(); }
+    }
+
+    @Override
+    public float Compute(float arg)
+    {
+        return m_tree.Compute(arg);
     }
 
 

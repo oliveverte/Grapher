@@ -6,11 +6,14 @@ import com.olivierpicard.Grapher.Tools.Interval2D;
 import com.olivierpicard.Grapher.Tools.ScenePoint;
 import com.olivierpicard.Grapher.Tools.VisualTools.Button;
 import com.olivierpicard.Grapher.Tools.VisualTools.ButtonImage;
+import com.olivierpicard.Grapher.Tools.VisualTools.Theme;
 import com.olivierpicard.Grapher.Tools.VisualTools.ThemeRefreshable;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 public class Scene extends JPanel implements ThemeRefreshable, MouseListener, MouseMotionListener
 {
@@ -31,6 +34,7 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener, Mo
 
 
     private final int BUTTON_MARGIN = 15;
+    private final int FUNCTION_POINT_CURSOR_SIZE = 13;
     private ViewController m_viewController;
     private Axis m_axis;
     private ScenePoint m_deltaOriginePosition;
@@ -210,7 +214,43 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener, Mo
         if(m_redoButton.isVisible = History.isRedoAvailable())
             m_redoButton.Draw(g2, getWidth() - (m_redoButton.size - BUTTON_MARGIN), m_redoButton.size / 2);
 
-        ScenePoint mousePoint = new ScenePoint(m_mousePointer.x, m_mousePointer.y).CangeSpace(Space.SCENE);
-        g2.fillOval(m_mousePointer.x, (int)mousePoint.get_y(), 10, 10);
+        DrawCursorPoint(g2);
+    }
+
+
+    private void DrawCursorPoint(Graphics2D g)
+    {
+        DataDrawable data;
+        if(Register.GetSelection() != null) data = Register.GetSelection();
+        else if(Register.GetLast() != null) data = Register.GetLast();
+        else return;
+
+        final float xCoord = new ScenePoint(m_mousePointer.x, m_mousePointer.y).ChangeSpace(Space.SCENE).get_x();
+        final float yCoord = data.Compute(xCoord);
+        final ScenePoint posScreen = new ScenePoint(xCoord, yCoord).ChangeSpace(Space.SCREEN);
+
+        final DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.CEILING);
+
+        g.setColor((ViewController.theme == Theme.LIGHT) ? Color.BLACK : Color.WHITE);
+        g.fillOval(
+                (int)(posScreen.get_x() - FUNCTION_POINT_CURSOR_SIZE/2),
+                (int)(posScreen.get_y() - FUNCTION_POINT_CURSOR_SIZE/2f),
+                FUNCTION_POINT_CURSOR_SIZE,
+                FUNCTION_POINT_CURSOR_SIZE
+        );
+
+        g.setColor((ViewController.theme == Theme.LIGHT) ? Color.BLACK : Color.WHITE);
+        g.drawString(
+                "x: " + df.format(xCoord),
+                posScreen.get_x() + FUNCTION_POINT_CURSOR_SIZE ,
+                posScreen.get_y()
+        );
+        g.drawString(
+                "y: " + df.format(yCoord),
+                posScreen.get_x() + FUNCTION_POINT_CURSOR_SIZE ,
+                posScreen.get_y() + 15
+        );
+
     }
 }

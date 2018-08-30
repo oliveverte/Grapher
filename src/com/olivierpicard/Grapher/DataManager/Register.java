@@ -46,7 +46,6 @@ public class Register {
         UnselectAll();
         if(index > -1)
             datas.get(index).set_isSelected(true);
-
     }
 
 
@@ -54,6 +53,23 @@ public class Register {
     {
         for(int i = 0; i < datas.size(); i++)
             datas.get(i).set_isSelected(false);
+    }
+
+
+    public static DataDrawable GetSelection()
+    {
+        for(DataDrawable drawable : datas) {
+            if (drawable.m_isSelected)
+                return drawable;
+        }
+        return null;
+    }
+
+
+    public static DataDrawable GetLast()
+    {
+        if(datas.size() == 0) return null;
+        return datas.get(datas.size() - 1);
     }
 
 }

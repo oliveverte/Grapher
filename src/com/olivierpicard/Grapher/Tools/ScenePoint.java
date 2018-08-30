@@ -29,7 +29,7 @@ public class ScenePoint
     }
 
 
-    public ScenePoint CangeSpace(Scene.Space space)
+    public ScenePoint ChangeSpace(Scene.Space space)
     {
         /** NewValue = (((OldValue - OldMin) * NewRange) / OldRange) + NewMin; */
         ScenePoint point = null;
