@@ -6,6 +6,8 @@ import java.awt.*;
 
 public class FunctionDrawer extends SceneDrawer
 {
+    public static final float FUNCTION_THICKNESS = 1.8f;
+
     public FunctionDrawer(Graphics graphics)
     {
         super(graphics);

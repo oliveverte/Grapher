@@ -4,6 +4,11 @@ import com.olivierpicard.Grapher.Interpreter.ANode;
 import com.olivierpicard.Grapher.Scene;
 import com.olivierpicard.Grapher.FunctionDrawer;
 import com.olivierpicard.Grapher.Tools.ScenePoint;
+import com.olivierpicard.Grapher.Tools.VisualTools.Theme;
+import com.olivierpicard.Grapher.ViewController;
+import jdk.nashorn.internal.objects.annotations.Function;
+
+import java.awt.*;
 
 
 public class FunctionDrawable extends DataDrawable
@@ -25,15 +30,19 @@ public class FunctionDrawable extends DataDrawable
         final float lowerBound = Scene.Constraint.sceneInterval.get_minX();
         final float upperBound = Scene.Constraint.sceneInterval.get_maxX();
         final float step = Math.min(Scene.Constraint.gridUnitResolution * Scene.Constraint.gridUnitValue, 0.2f);
-        drawer.SetColor(m_color);
-        float i;
-        for(i = lowerBound; i <= upperBound+1; i += step) {
-            try {
-                drawer.Add(new ScenePoint(i, m_tree.Compute(i)));
-            } catch (ArithmeticException e) {
-                drawer.Clear();
-            }
+
+        if(m_isSelected) {
+            drawer.SetThickness(FunctionDrawer.FUNCTION_THICKNESS + 2f);
+            drawer.SetColor((ViewController.theme == Theme.LIGHT ? m_color.darker() : m_color.brighter()));
+            for(float i = lowerBound; i <= upperBound+1; i += step)
+                try { drawer.Add(new ScenePoint(i, m_tree.Compute(i))); } catch (ArithmeticException e) { drawer.Clear(); }
         }
+
+        drawer.SetThickness(FunctionDrawer.FUNCTION_THICKNESS);
+        drawer.SetColor(m_color);
+
+        for(float i = lowerBound; i <= upperBound+1; i += step)
+            try { drawer.Add(new ScenePoint(i, m_tree.Compute(i))); } catch (ArithmeticException e) { drawer.Clear(); }
     }
 
 

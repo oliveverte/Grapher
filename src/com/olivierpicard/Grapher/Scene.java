@@ -211,8 +211,6 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener, Mo
             m_redoButton.Draw(g2, getWidth() - (m_redoButton.size - BUTTON_MARGIN), m_redoButton.size / 2);
 
         ScenePoint mousePoint = new ScenePoint(m_mousePointer.x, m_mousePointer.y).CangeSpace(Space.SCENE);
-        g2.drawOval((int)mousePoint.get_x(), (int)mousePoint.get_y(), 20, 20);
-
-
+        g2.fillOval(m_mousePointer.x, (int)mousePoint.get_y(), 10, 10);
     }
 }

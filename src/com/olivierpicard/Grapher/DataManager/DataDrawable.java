@@ -11,6 +11,7 @@ public abstract class DataDrawable {
     protected String m_name;
     protected String m_expression;
     protected short m_id;
+    protected boolean m_isSelected;
 
     public abstract String toString();
     public abstract void Draw(FunctionDrawer drawer);
@@ -19,7 +20,7 @@ public abstract class DataDrawable {
     public DataDrawable(Color color, String name, String expression)
     {
         Random r = new Random();
-        int Low = 0x505050, High = 0xAFAFAF; // Black and White value from hexa
+        int Low = 0x707070, High = 0xAFAFAF; // Gray value in hexa
 
         m_color = new Color(r.nextInt(High-Low) + Low);
         m_name = name;
@@ -53,4 +54,12 @@ public abstract class DataDrawable {
     }
 
 
+    public boolean is_isSelected() {
+        return m_isSelected;
+    }
+
+
+    public void set_isSelected(boolean m_isSelected) {
+        this.m_isSelected = m_isSelected;
+    }
 }
