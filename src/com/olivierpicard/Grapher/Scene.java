@@ -34,7 +34,7 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener, Mo
 
 
     private final int BUTTON_MARGIN = 15;
-    private final int FUNCTION_POINT_CURSOR_SIZE = 13;
+    private final int FUNCTION_POINT_CURSOR_SIZE = 10;
     private ViewController m_viewController;
     private Axis m_axis;
     private ScenePoint m_deltaOriginePosition;
@@ -240,10 +240,18 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener, Mo
                 FUNCTION_POINT_CURSOR_SIZE
         );
 
+        g.setColor((ViewController.theme == Theme.LIGHT) ? Color.WHITE : Color.BLACK);
+        g.fillRect(
+                (int)posScreen.get_x() + FUNCTION_POINT_CURSOR_SIZE,
+                (int)posScreen.get_y() - 15,
+                7*8,
+                15*2
+        );
+
         g.setColor((ViewController.theme == Theme.LIGHT) ? Color.BLACK : Color.WHITE);
         g.drawString(
                 "x: " + df.format(xCoord),
-                posScreen.get_x() + FUNCTION_POINT_CURSOR_SIZE ,
+                posScreen.get_x() + FUNCTION_POINT_CURSOR_SIZE,
                 posScreen.get_y()
         );
         g.drawString(
