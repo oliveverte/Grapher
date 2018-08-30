@@ -70,14 +70,14 @@ public class Axis
         value = -Scene.Constraint.gridUnitValue;
         for (int i = (int) Scene.Constraint.originPixelPosition.get_y() + step; i <= Scene.Constraint.screenSize.height; i += step, value -= Scene.Constraint.gridUnitValue) {
             final String strValue = String.format(df.format(value));
-            g.drawString(strValue, Scene.Constraint.originPixelPosition.get_x() - characterPixelSize * strValue.length() * 2,  i + 5);
+            g.drawString(strValue, Scene.Constraint.originPixelPosition.get_x() - characterPixelSize * strValue.length() * 2 - 5,  i + 5);
         }
 
 
         value = Scene.Constraint.gridUnitValue;
         for (int i = (int) Scene.Constraint.originPixelPosition.get_y() - step; i > 0; i -= step, value += Scene.Constraint.gridUnitValue) {
             final String strValue = String.format(df.format(value));
-            g.drawString(strValue, Scene.Constraint.originPixelPosition.get_x() - characterPixelSize * strValue.length() * 2,  i + 5);
+            g.drawString(strValue, Scene.Constraint.originPixelPosition.get_x() - characterPixelSize * strValue.length() * 2 - 5,  i + 5);
         }
 
     }
