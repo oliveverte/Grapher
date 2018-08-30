@@ -19,7 +19,7 @@ public abstract class DataDrawable {
     public DataDrawable(Color color, String name, String expression)
     {
         Random r = new Random();
-        int Low = 0, High = 16777215; // Black and White value from hexa
+        int Low = 0x505050, High = 0xAFAFAF; // Black and White value from hexa
 
         m_color = new Color(r.nextInt(High-Low) + Low);
         m_name = name;

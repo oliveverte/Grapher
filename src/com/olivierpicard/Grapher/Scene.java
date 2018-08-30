@@ -12,7 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Scene extends JPanel implements ThemeRefreshable, MouseListener
+public class Scene extends JPanel implements ThemeRefreshable, MouseListener, MouseMotionListener
 {
     public enum Space { SCREEN, SCENE }
 
@@ -37,6 +37,7 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener
     private Point m_lastMousePosition;
     private Button[] m_buttons;
     private ButtonImage m_undoButton, m_redoButton;
+    private Point m_mousePointer;
 
 
     public Scene(ViewController viewController)
@@ -44,6 +45,7 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener
         m_viewController = viewController;
         m_deltaOriginePosition = new ScenePoint(0f, 0f);
         m_axis = new Axis();
+        m_mousePointer = new Point(0, 0);
         Refresh();
 
         m_buttons = new Button[4];
@@ -69,6 +71,7 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener
             }
         });
         addMouseListener(this);
+        addMouseMotionListener(this);
     }
 
 
@@ -118,7 +121,7 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener
     }
 
 
-    private void mouseDragged(MouseEvent e)
+    public void mouseDragged(MouseEvent e)
     {
         int dx = e.getX() - m_lastMousePosition.x;
         int dy = e.getY() - m_lastMousePosition.y;
@@ -128,12 +131,19 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener
     }
 
 
+    @Override
+    public void mouseMoved(MouseEvent e)
+    {
+        m_mousePointer = e.getPoint();
+        Refresh();
+    }
+
+
     public void OnZoomOutButton()
     {
         if(Constraint.zoomFactor <= -Constraint.MAX_ZOOM_FACTOR) return;
 
         Constraint.zoomFactor--;
-//        Constraint.gridUnitPixelSize -= 4;
         Constraint.gridUnitValue /= Constraint.ZOOM_UNIT_INCREASE_FACTOR;
         Refresh();
     }
@@ -144,7 +154,6 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener
         if(Constraint.zoomFactor >= Constraint.MAX_ZOOM_FACTOR)return;
 
         Constraint.zoomFactor++;
-//        Constraint.gridUnitPixelSize += 4;
         Constraint.gridUnitValue *= Constraint.ZOOM_UNIT_INCREASE_FACTOR;
         Refresh();
     }
@@ -200,6 +209,10 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener
 
         if(m_redoButton.isVisible = History.isRedoAvailable())
             m_redoButton.Draw(g2, getWidth() - (m_redoButton.size - BUTTON_MARGIN), m_redoButton.size / 2);
+
+        ScenePoint mousePoint = new ScenePoint(m_mousePointer.x, m_mousePointer.y).CangeSpace(Space.SCENE);
+        g2.drawOval((int)mousePoint.get_x(), (int)mousePoint.get_y(), 20, 20);
+
 
     }
 }

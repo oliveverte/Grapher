@@ -15,7 +15,7 @@ public class FunctionDrawer extends SceneDrawer
 
     public void Add(ScenePoint point)
     {
-        point = point.ConvertToScreenSpace();
+        point = point.CangeSpace(Scene.Space.SCREEN);
 
         if(m_lastPoint == null) { m_lastPoint = point; return; }
 

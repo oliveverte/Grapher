@@ -15,8 +15,8 @@ public class Axis
 
     public void Draw(Graphics2D g)
     {
-        Draw(g, Scene.Constraint.gridUnitPixelSize / UNIT_DIVISION, ViewController.theme.get_thinGridColor());
-        Draw(g, Scene.Constraint.gridUnitPixelSize, ViewController.theme.get_gridColor());
+//        Draw(g, Scene.Constraint.gridUnitPixelSize / UNIT_DIVISION, ViewController.theme.get_thinGridColor());
+//        Draw(g, Scene.Constraint.gridUnitPixelSize, ViewController.theme.get_gridColor());
 
         g.setColor(ViewController.theme.get_foregroundColor());
         g.setStroke(new BasicStroke(2));

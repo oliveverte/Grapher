@@ -29,13 +29,24 @@ public class ScenePoint
     }
 
 
-    public ScenePoint ConvertToScreenSpace()
+    public ScenePoint CangeSpace(Scene.Space space)
     {
-        // NewValue = (((OldValue - OldMin) * NewRange) / OldRange) + NewMin;
-        ScenePoint point  = new ScenePoint(
-                (((_x - Scene.Constraint.sceneInterval.get_minX()) * Scene.Constraint.screenSize.width) / Scene.Constraint.sceneInterval.get_rangeX()),
-                (float)Scene.Constraint.screenSize.height - (((_y - Scene.Constraint.sceneInterval.get_minY()) * Scene.Constraint.screenSize.height) / Scene.Constraint.sceneInterval.get_rangeY())
-        );
+        /** NewValue = (((OldValue - OldMin) * NewRange) / OldRange) + NewMin; */
+        ScenePoint point = null;
+
+        switch (space)
+        {
+            case SCREEN:
+                point  = new ScenePoint(
+                        (((_x - Scene.Constraint.sceneInterval.get_minX()) * Scene.Constraint.screenSize.width) / Scene.Constraint.sceneInterval.get_rangeX()),
+                        (float)Scene.Constraint.screenSize.height - (((_y - Scene.Constraint.sceneInterval.get_minY()) * Scene.Constraint.screenSize.height) / Scene.Constraint.sceneInterval.get_rangeY()));
+                break;
+            case SCENE:
+                point = new ScenePoint(
+                        ((_x * Scene.Constraint.sceneInterval.get_rangeX()) / Scene.Constraint.screenSize.width) + Scene.Constraint.sceneInterval.get_minX(),
+                        ((_y * Scene.Constraint.sceneInterval.get_rangeY()) / Scene.Constraint.screenSize.height) + Scene.Constraint.sceneInterval.get_minY());
+                break;
+        }
         return point;
     }
 
