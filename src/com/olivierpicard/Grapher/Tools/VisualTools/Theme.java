@@ -45,23 +45,29 @@ public enum Theme
 
     public Color get_gridColor()
     {
-        if(ordinal() == LIGHT.ordinal()) return Color.GRAY;
-        return new Color(0x515151);
+        if(ordinal() == LIGHT.ordinal()) return new Color(0xD3D3D3);
+        return new Color(0x303030);
     }
 
     public Color get_thinGridColor()
     {
-        if(ordinal() == LIGHT.ordinal()) return Color.LIGHT_GRAY;
-        return new Color(0x2d2d2d);
+        if(ordinal() == LIGHT.ordinal()) return new Color(0xEDEDED);
+        return new Color(0x232323);
     }
 
-    public Color get_ButtonBackgroundColor()
+    public Color get_buttonBackgroundColor()
     {
         if(ordinal() == LIGHT.ordinal()) return  Color.LIGHT_GRAY;
         return Color.DARK_GRAY;
     }
 
-    public Color get_ButtonBorderColor()
+    public Color get_buttonBorderColor()
+    {
+        if(ordinal() == LIGHT.ordinal()) return  Color.DARK_GRAY;
+        return Color.LIGHT_GRAY;
+    }
+
+    public Color get_axisColor()
     {
         if(ordinal() == LIGHT.ordinal()) return  Color.DARK_GRAY;
         return Color.LIGHT_GRAY;

@@ -18,8 +18,8 @@ public class Axis
         Draw(g, Scene.Constraint.gridUnitPixelSize / UNIT_DIVISION, ViewController.theme.get_thinGridColor());
         Draw(g, Scene.Constraint.gridUnitPixelSize, ViewController.theme.get_gridColor());
 
-        g.setColor(ViewController.theme.get_foregroundColor());
-        g.setStroke(new BasicStroke(2));
+        g.setColor(ViewController.theme.get_axisColor());
+        g.setStroke(new BasicStroke(1.7f));
         g.drawLine(0, (int)Scene.Constraint.originPixelPosition.get_y(), Scene.Constraint.screenSize.width, (int)Scene.Constraint.originPixelPosition.get_y());
         g.drawLine((int)Scene.Constraint.originPixelPosition.get_x(), 0, (int)Scene.Constraint.originPixelPosition.get_x(), Scene.Constraint.screenSize.height);
 

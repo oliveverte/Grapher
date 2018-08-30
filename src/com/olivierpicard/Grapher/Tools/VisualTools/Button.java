@@ -2,7 +2,6 @@ package com.olivierpicard.Grapher.Tools.VisualTools;
 
 import com.olivierpicard.Grapher.ViewController;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
@@ -48,10 +47,10 @@ public class Button implements ThemeRefreshable
         isVisible = true;
         m_x = x;
         m_y = y;
-        g.setColor(ViewController.theme.get_ButtonBackgroundColor());
+        g.setColor(ViewController.theme.get_buttonBackgroundColor());
         g.fillOval(x - size /2, y - size /2, size, size);
 
-        g.setColor(ViewController.theme.get_ButtonBorderColor());
+        g.setColor(ViewController.theme.get_buttonBorderColor());
         g.drawOval(x - size /2, y - size /2, size, size);
 
         if(m_icon == null) return;
