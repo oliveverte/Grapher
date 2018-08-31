@@ -185,6 +185,8 @@ public class Parser
                 case 8:
                     if(--m_parentheseCounter < 0) { state = 9; break; }
                     m_tree = m_tree.getAnchor()._parent;
+                    if(m_tree.getAnchor() instanceof  TrigoWrapNode) m_tree = m_tree._parent;
+
                     if(TryReadNextToken(")")) break;
                     else if(LookNextToken(m_variableName)) state = 6;
                     else if(LoofIf_IsATrigoFunction()) state = 5;
