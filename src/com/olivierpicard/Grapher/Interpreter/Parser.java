@@ -21,6 +21,7 @@ public class Parser
 
     public FunctionDrawable Interpret()
     {
+        m_expression = m_expression.replace(" ", "");
         m_tree = new WrapNode();
         m_functionName = m_variableName = "";
         int startingExpression = 0;
@@ -113,7 +114,8 @@ public class Parser
         int state = 0;
         String currentReading = "";
         if(hasReachTheEnd()) throw new IllegalArgumentException();
-        while(!hasReachTheEnd()) {
+        while(!hasReachTheEnd())
+        {
 //            System.out.println("index : " + m_readingHead + "\t charAt : " + m_expression.charAt(m_readingHead) + "\t state : " + state);
             switch (state) {
                 case 0:

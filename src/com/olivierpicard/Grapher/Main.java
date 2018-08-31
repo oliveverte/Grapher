@@ -7,6 +7,12 @@ import java.awt.*;
 
 public class Main
 {
+    /*************************************************
+     *
+     * Lire le README.rtf à la racine du projet
+     *
+     *************************************************/
+
     public static void main(String[] args)
     {
         System.setProperty("sun.java2d.opengl", "true");
@@ -16,7 +22,5 @@ public class Main
     public static void init()
     {
         ViewController view = new ViewController();
-//        Parser p = new Parser("sqrt(3)");
-//        System.out.println(p.Interpret().get_tree().Compute(1));
     }
 }

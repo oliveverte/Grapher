@@ -10,6 +10,13 @@ import com.olivierpicard.Grapher.Tools.VisualTools.ThemeRefreshable;
 import javax.swing.*;
 import java.awt.*;
 
+/*************************************************
+ *
+ * Lire le README.rtf à la racine du projet
+ *
+ *************************************************/
+
+
 public class ViewController extends JFrame implements ThemeRefreshable
 {
     public static Theme theme = Theme.LIGHT;
@@ -50,7 +57,7 @@ public class ViewController extends JFrame implements ThemeRefreshable
 //        ExecFunctionInterpreter("f(x)=1/x");
 //        ExecFunctionInterpreter("f(x)=tan(x)");
 //        ExecFunctionInterpreter("f(x)=(tan(x))/50");
-        ExecFunctionInterpreter("sqrt(x)");
+//        ExecFunctionInterpreter("sqrt(x)");
 
 
         RefreshTheme();
@@ -85,6 +92,7 @@ public class ViewController extends JFrame implements ThemeRefreshable
     public void ExecFunctionInterpreter(String function)
     {
         // TODO : Faire la capture des erreur et empêcher d'afficher
+
         try {
             DataDrawable data = new Parser(function).Interpret();
             History.Write(new RegisterAddAction(data));
