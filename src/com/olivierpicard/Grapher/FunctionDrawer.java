@@ -17,6 +17,7 @@ public class FunctionDrawer extends SceneDrawer
 
     public void Add(ScenePoint point)
     {
+        if(Float.isNaN(point.get_y()) || Float.isInfinite(point.get_y())) return;
         ScenePoint _point = point.ChangeSpace(Scene.Space.SCREEN);
 
         if(m_lastPoint == null) { m_lastPoint = point; return; }

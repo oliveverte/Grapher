@@ -45,11 +45,12 @@ public class ViewController extends JFrame implements ThemeRefreshable
         requestFocusInWindow();
 
 //        ExecFunctionInterpreter("f(x)=sin(x)");
-        ExecFunctionInterpreter("g(x)=x^2");
+//        ExecFunctionInterpreter("g(x)=x^2");
 //        ExecFunctionInterpreter("h(x)=2*x");
-        ExecFunctionInterpreter("f(x)=1/x");
-        ExecFunctionInterpreter("f(x)=tan(x)");
-        ExecFunctionInterpreter("f(x)=(tan(x))/50");
+//        ExecFunctionInterpreter("f(x)=1/x");
+//        ExecFunctionInterpreter("f(x)=tan(x)");
+//        ExecFunctionInterpreter("f(x)=(tan(x))/50");
+        ExecFunctionInterpreter("sqrt(x)");
 
 
         RefreshTheme();
@@ -84,7 +85,6 @@ public class ViewController extends JFrame implements ThemeRefreshable
     public void ExecFunctionInterpreter(String function)
     {
         // TODO : Faire la capture des erreur et empêcher d'afficher
-
         try {
             DataDrawable data = new Parser(function).Interpret();
             History.Write(new RegisterAddAction(data));

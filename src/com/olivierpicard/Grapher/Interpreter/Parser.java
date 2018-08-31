@@ -119,7 +119,7 @@ public class Parser
                 case 0:
                     if(TryReadNextToken("-")) state = 1;
                     else if(LookIf_Charater_IsANumber()) state = 2;
-                    else if(LoofIf_IsATrigoFunction()) state = 5;
+                    else if(LoofIf_IsAMathFunction()) state = 5;
                     else if(LookNextToken(m_variableName)) state = 6;
                     else if(TryReadNextToken("(")) state = 7;
                     else state = 9;
@@ -127,7 +127,7 @@ public class Parser
                 case 1:
                     m_tree = m_tree.InsertNode(new OppositeStandaloneNode());
                     if(LookIf_Charater_IsANumber()) state = 2;
-                    else if(LoofIf_IsATrigoFunction()) state = 5;
+                    else if(LoofIf_IsAMathFunction()) state = 5;
                     else if(LookNextToken(m_variableName)) state = 6;
                     else state = 9;
                     break;
@@ -144,7 +144,7 @@ public class Parser
                     }
 
                     if(LookIf_IsAnOperator()) state = 4;
-                    else if(LoofIf_IsATrigoFunction()) state = 5;
+                    else if(LoofIf_IsAMathFunction()) state = 5;
                     else if(LookNextToken(m_variableName)) state = 6;
                     else if(TryReadNextToken("(")) state = 7;
                     else if(TryReadNextToken(")")) state = 8;
@@ -160,11 +160,11 @@ public class Parser
                     if(LookIf_Charater_IsANumber()) state = 2;
                     else if(TryReadNextToken("(")) state = 7;
                     else if(LookNextToken(m_variableName)) state = 6;
-                    else if(LoofIf_IsATrigoFunction()) state = 5;
+                    else if(LoofIf_IsAMathFunction()) state = 5;
                     else state = 9;
                     break;
                 case 5:
-                    m_tree = m_tree.InsertNode(new TrigoWrapNode(ReadATrigoFunction()));
+                    m_tree = m_tree.InsertNode(new MathWrapNode(ReadAMathFunction()));
                     if(TryReadNextToken("(")) state = 7;
                     else state = 9;
                     break;
@@ -185,11 +185,11 @@ public class Parser
                 case 8:
                     if(--m_parentheseCounter < 0) { state = 9; break; }
                     m_tree = m_tree.getAnchor()._parent;
-                    if(m_tree.getAnchor() instanceof  TrigoWrapNode) m_tree = m_tree._parent;
+                    if(m_tree.getAnchor() instanceof MathWrapNode) m_tree = m_tree._parent;
 
                     if(TryReadNextToken(")")) break;
                     else if(LookNextToken(m_variableName)) state = 6;
-                    else if(LoofIf_IsATrigoFunction()) state = 5;
+                    else if(LoofIf_IsAMathFunction()) state = 5;
                     else if(LookIf_Charater_IsANumber()) state = 2;
                     else if(LookIf_IsAnOperator()) state = 4;
                     break;
@@ -276,9 +276,9 @@ public class Parser
     }
 
 
-    private boolean LoofIf_IsATrigoFunction()
+    private boolean LoofIf_IsAMathFunction()
     {
-        for (TrigoFunctions functionName : TrigoFunctions.values())
+        for (MathFunctions functionName : MathFunctions.values())
             if(LookNextToken(functionName.toString().toLowerCase()))
                 return true;
         return false;
@@ -291,9 +291,9 @@ public class Parser
     }
 
 
-    private TrigoFunctions ReadATrigoFunction()
+    private MathFunctions ReadAMathFunction()
     {
-        for (TrigoFunctions functionName : TrigoFunctions.values())
+        for (MathFunctions functionName : MathFunctions.values())
             if(TryReadNextToken(functionName.toString().toLowerCase()))
                 return functionName;
         return null;

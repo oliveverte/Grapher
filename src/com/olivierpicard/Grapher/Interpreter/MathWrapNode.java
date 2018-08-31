@@ -1,11 +1,11 @@
 package com.olivierpicard.Grapher.Interpreter;
 
-public class TrigoWrapNode extends WrapNode
+public class MathWrapNode extends WrapNode
 {
-    private TrigoFunctions _functionName;
+    private MathFunctions _functionName;
 
 
-    public TrigoWrapNode(TrigoFunctions functionName)
+    public MathWrapNode(MathFunctions functionName)
     {
         _functionName = functionName;
     }
@@ -19,6 +19,8 @@ public class TrigoWrapNode extends WrapNode
             case SIN: result = (float)Math.sin(result); break;
             case COS: result = (float)Math.cos(result); break;
             case TAN: result = (float)Math.tan(result); break;
+            case SQRT: result = (float)Math.sqrt(result); break;
+            case EXP: result = (float)Math.exp(result); break;
         }
         return result;
     }

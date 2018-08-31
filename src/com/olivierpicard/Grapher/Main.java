@@ -16,5 +16,7 @@ public class Main
     public static void init()
     {
         ViewController view = new ViewController();
+//        Parser p = new Parser("sqrt(3)");
+//        System.out.println(p.Interpret().get_tree().Compute(1));
     }
 }

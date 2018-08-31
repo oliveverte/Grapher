@@ -230,6 +230,7 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener, Mo
 
         final float xCoord = new ScenePoint(m_mousePointer.x, m_mousePointer.y).ChangeSpace(Space.SCENE).get_x();
         final float yCoord = data.Compute(xCoord);
+        if(Float.isNaN(yCoord) || Float.isInfinite(yCoord)) return;
         final ScenePoint posScreen = new ScenePoint(xCoord, yCoord).ChangeSpace(Space.SCREEN);
 
         final DecimalFormat df = new DecimalFormat("#.##");
