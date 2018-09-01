@@ -4,10 +4,8 @@ import com.olivierpicard.Grapher.DataManager.History;
 import com.olivierpicard.Grapher.DataManager.Register;
 import com.olivierpicard.Grapher.Tools.Interval2D;
 import com.olivierpicard.Grapher.Tools.ScenePoint;
+import com.olivierpicard.Grapher.Tools.VisualTools.*;
 import com.olivierpicard.Grapher.Tools.VisualTools.Button;
-import com.olivierpicard.Grapher.Tools.VisualTools.ButtonImage;
-import com.olivierpicard.Grapher.Tools.VisualTools.Theme;
-import com.olivierpicard.Grapher.Tools.VisualTools.ThemeRefreshable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,9 +33,9 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener, Mo
 
     private final int BUTTON_MARGIN = 15;
     private final int FUNCTION_POINT_CURSOR_SIZE = 10;
+    public static ScenePoint deltaOriginePosition;
     private ViewController m_viewController;
     private Axis m_axis;
-    private ScenePoint m_deltaOriginePosition;
     private Point m_lastMousePosition;
     private Button[] m_buttons;
     private ButtonImage m_undoButton, m_redoButton;
@@ -47,15 +45,15 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener, Mo
     public Scene(ViewController viewController)
     {
         m_viewController = viewController;
-        m_deltaOriginePosition = new ScenePoint(0f, 0f);
+        deltaOriginePosition = new ScenePoint(0f, 0f);
         m_axis = new Axis();
         m_mousePointer = new Point(0, 0);
         Refresh();
 
         m_buttons = new Button[4];
-        m_buttons[0] = new Button(this::OnZoomOutButton, "img/minus.png");
-        m_buttons[1] = new Button(this::OnZoomInButton, "img/plus.png");
-        m_buttons[2] = new Button(this::OnCenterButton, "img/target.png");
+        m_buttons[0] = new CenterButton(this::OnCenterButton, "img/target.png");
+        m_buttons[1] = new Button(this::OnZoomOutButton, "img/minus.png");
+        m_buttons[2] = new Button(this::OnZoomInButton, "img/plus.png");
         m_buttons[3] = new Button(this::OnThemeButton, "img/theme.png");
 
         m_undoButton = new ButtonImage(this::OnUndoButton, "img/undo.png");
@@ -98,7 +96,7 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener, Mo
     public void Refresh()
     {
         Constraint.screenSize = getSize();
-        Constraint.originPixelPosition = new ScenePoint(getWidth()/2f, getHeight()/2f).Add(m_deltaOriginePosition);
+        Constraint.originPixelPosition = new ScenePoint(getWidth()/2f, getHeight()/2f).Add(deltaOriginePosition);
         Constraint.sceneInterval = new Interval2D(
                 -Constraint.originPixelPosition.get_x() / ((float)Constraint.gridUnitPixelSize / Constraint.gridUnitValue),
                 (getSize().width - Constraint.originPixelPosition.get_x()) / ((float)Constraint.gridUnitPixelSize / Constraint.gridUnitValue),
@@ -130,7 +128,7 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener, Mo
     {
         int dx = e.getX() - m_lastMousePosition.x;
         int dy = e.getY() - m_lastMousePosition.y;
-        m_deltaOriginePosition.Add(new ScenePoint(dx, dy));
+        deltaOriginePosition.Add(new ScenePoint(dx, dy));
         m_lastMousePosition = e.getPoint();
         Refresh();
     }
@@ -166,7 +164,7 @@ public class Scene extends JPanel implements ThemeRefreshable, MouseListener, Mo
 
     public void OnCenterButton()
     {
-        m_deltaOriginePosition = new ScenePoint(0f, 0f);
+        deltaOriginePosition = new ScenePoint(0f, 0f);
         Constraint.gridUnitValue = 1f;
         Constraint.zoomFactor = 0;
     }

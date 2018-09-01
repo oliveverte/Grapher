@@ -54,30 +54,46 @@ public class Axis
         final int characterPixelSize = 4;
         float value;
         value = 0;
+        final ScenePoint baseCoord = new ScenePoint(Scene.Constraint.originPixelPosition.get_x(), Scene.Constraint.originPixelPosition.get_y());
+
+        if((int)Scene.Constraint.originPixelPosition.get_y() > Scene.Constraint.screenSize.height - 25)
+            baseCoord.set_y(Scene.Constraint.screenSize.height - 25);
+        else if((int)Scene.Constraint.originPixelPosition.get_y() < 3)
+            baseCoord.set_y(3f);
+        if((int)Scene.Constraint.originPixelPosition.get_x() > Scene.Constraint.screenSize.width)
+            baseCoord.set_x(Scene.Constraint.screenSize.width);
+        else if((int)Scene.Constraint.originPixelPosition.get_x() < 0)
+            baseCoord.set_x(0);
+
+
         for (int i = (int) Scene.Constraint.originPixelPosition.get_x(); i >= 0; i -= step, value -= Scene.Constraint.gridUnitValue) {
-            final String strValue = String.format(df.format(value));
-            g.drawString(strValue, i - characterPixelSize * strValue.length(), Scene.Constraint.originPixelPosition.get_y() + 15);
+            final String strValue = df.format(value);
+            g.drawString(strValue, i - characterPixelSize * strValue.length(), baseCoord.get_y() + 15);
         }
 
         value = 0;
         for (int i = (int) Scene.Constraint.originPixelPosition.get_x(); i <= Scene.Constraint.screenSize.width; i += step, value += Scene.Constraint.gridUnitValue) {
-            final String strValue = String.format(df.format(value));
-            g.drawString(strValue, i - characterPixelSize * strValue.length(), Scene.Constraint.originPixelPosition.get_y() + 15);
+            final String strValue = df.format(value);
+            g.drawString(strValue, i - characterPixelSize * strValue.length(), baseCoord.get_y() + 15);
         }
 
         // Horizontal
 
         value = -Scene.Constraint.gridUnitValue;
         for (int i = (int) Scene.Constraint.originPixelPosition.get_y() + step; i <= Scene.Constraint.screenSize.height; i += step, value -= Scene.Constraint.gridUnitValue) {
-            final String strValue = String.format(df.format(value));
-            g.drawString(strValue, Scene.Constraint.originPixelPosition.get_x() - characterPixelSize * strValue.length() * 2 - 5,  i + 5);
+            final String strValue = df.format(value);
+            final int sapce = characterPixelSize * strValue.length();
+            final int alignement =  (Scene.Constraint.originPixelPosition.get_x() > 0) ? -sapce - 25 : sapce - 5;
+            g.drawString(strValue, baseCoord.get_x() + alignement ,  i + 5);
         }
 
 
         value = Scene.Constraint.gridUnitValue;
         for (int i = (int) Scene.Constraint.originPixelPosition.get_y() - step; i > 0; i -= step, value += Scene.Constraint.gridUnitValue) {
-            final String strValue = String.format(df.format(value));
-            g.drawString(strValue, Scene.Constraint.originPixelPosition.get_x() - characterPixelSize * strValue.length() * 2 - 5,  i + 5);
+            final String strValue = df.format(value);
+            final int sapce = characterPixelSize * strValue.length();
+            final int alignement =  (Scene.Constraint.originPixelPosition.get_x() > 0) ? -sapce - 25 : sapce + 5;
+            g.drawString(strValue, baseCoord.get_x() + alignement ,  i + 5);
         }
 
     }
